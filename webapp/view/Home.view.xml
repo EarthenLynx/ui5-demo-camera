@@ -15,12 +15,11 @@
 		<content>
 			<core:HTML content='&lt;video id=&quot;video-stream&quot; autoplay /&gt;'></core:HTML>
 			<core:HTML content='&lt;canvas id=&quot;video-canvas&quot; style=&quot;display: none;&quot; /&gt;'></core:HTML>
-			<Image ariaDetails="camera snap" src="{config>/cameraSnapUrl}" width="100%" decorative="false" />
 		</content>
 		<footer>
 			<OverflowToolbar>
 				<ToolbarSpacer/>
-				<Button tooltip="Take picture" icon="sap-icon://camera" press="handleTakeScreenshot" />
+				<Button text="Snap" tooltip="Take picture" icon="sap-icon://camera" type="Emphasized" press="handleTakeScreenshot" />
 				<ToolbarSpacer/>
 			</OverflowToolbar>
 		</footer>

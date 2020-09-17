@@ -1,7 +1,8 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"../model/formatter"
-], function (Controller, formatter) {
+	"../model/formatter",
+	"sap/ui/core/Fragment"
+], function (Controller, formatter, Fragment) {
 	"use strict";
 
 	return Controller.extend("ui5.demo.camera.controller.App", {
@@ -24,7 +25,6 @@ sap.ui.define([
 				.then((videoDevices) => {
 					// Set the config model accordingly to the media devices that have been found
 					config.setProperty('/videoDevices', videoDevices);
-					console.log(config.getProperty('/videoDevices'));
 				})
 				.then(
 					() =>
@@ -32,10 +32,10 @@ sap.ui.define([
 							config.getProperty('/videoDevices')[1].deviceId)
 				)
 				// After contraints are set, initially ask for stream permission
-				.then(() => self.handleChangeStream());
+				.then(() => self.onChangeStream());
 		},
 
-		handleChangeStream() {
+		onChangeStream() {
 			const self = this;
 
 			// Get the video contrains
@@ -58,6 +58,33 @@ sap.ui.define([
 
 			// Convert the canvas content to data Url and assign to model
 			this.getOwnerComponent().getModel('config').setProperty('/cameraSnapUrl', canvas.toDataURL('image/jpg'))
+
+			// Open the dialog
+			this.onOpenPreview();
+		},
+
+		onOpenPreview() {
+			const oView = this.getView();
+
+			// create dialog lazily
+			if (!this.byId("preview")) {
+				// load asynchronous XML fragment
+				Fragment.load({
+					id: oView.getId(),
+					name: "ui5.demo.camera.view.Preview",
+					controller: this
+				}).then((oDialog) => {
+					// connect dialog to the root view of this component (models, lifecycle)
+					oView.addDependent(oDialog);
+					oDialog.open();
+				});
+			} else {
+				this.byId("preview").open();
+			}
+		},
+
+		onClosePreview() {
+			this.byId("preview").close();
 		}
 	});
 });
