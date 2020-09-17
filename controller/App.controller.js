@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/demo/basicTemplate/model/formatter"],function(e,t){"use strict";return e.extend("ui5.demo.camera.controller.App",{formatter:t,onInit:function(){}})});
