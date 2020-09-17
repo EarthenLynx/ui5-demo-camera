@@ -4,7 +4,7 @@
 	xmlns:mvc="sap.ui.core.mvc">
 	<Page id="page" title="{i18n>title}">
 		<headerContent>
-			<Select items="{config>/videoDevices}">
+			<Select id="cam-select" change="handleSetDeviceId" selectedKey="config>/videoContraints/video/deviceId/exact" items="{config>/videoDevices}">
 				<core:ListItem key="{config>deviceId}" text="{config>label}" icon="sap-icon://video"/>
 			</Select>
 		</headerContent>

@@ -17,7 +17,7 @@ sap.ui.define([
 				"cameraSelection": "",
 				"cameraSnapUrl": "",
 				"videoDevices": [],
-				"videoContrains": {
+				"videoContraints": {
 					video: {
 						height: { min: 640, ideal: 736, max: 736 },
 						width: { min: 326, ideal: 538, max: 1920 },

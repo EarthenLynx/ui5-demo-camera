@@ -9,12 +9,13 @@ sap.ui.define([
 
 		formatter: formatter,
 
+
 		onInit() {
 			const self = this;
 
 			// Get the config and video contraints
 			const config = self.getOwnerComponent().getModel('config')
-			const videoContraints = config.getProperty('/videoContrains');
+			const videoContraints = config.getProperty('/videoContraints');
 
 			// Initially get and set the video media devices
 			navigator.mediaDevices
@@ -37,10 +38,12 @@ sap.ui.define([
 
 		onChangeStream() {
 			const self = this;
-
+			
 			// Get the video contrains
-			const videoContraints = self.getOwnerComponent().getModel('config').getProperty('/videoContrains');
+			const videoContraints = self.getOwnerComponent().getModel('config').getProperty('/videoContraints');
 			const video = document.getElementById('video-stream');
+
+			console.log(videoContraints);
 			navigator.mediaDevices.getUserMedia(videoContraints).then((stream) => {
 				video.srcObject = stream;
 				video.play();
@@ -85,6 +88,12 @@ sap.ui.define([
 
 		onClosePreview() {
 			this.byId("preview").close();
+		}, 
+
+		handleSetDeviceId() {
+			const oId = this.byId('cam-select').getSelectedKey()
+			this.getOwnerComponent().getModel('config').setProperty('/videoContraints/video/deviceId/exact', oId);
+			this.onChangeStream();
 		}
 	});
 });
