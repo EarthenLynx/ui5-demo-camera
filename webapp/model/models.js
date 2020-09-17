@@ -14,8 +14,9 @@ sap.ui.define([
 
 		createConfigModel() {
 			const oModel = new JSONModel({
-				"cameraSelection": [],
+				"cameraSelection": "",
 				"cameraSnapUrl": "",
+				"videoDevices": [],
 				"videoContrains": {
 					video: {
 						height: { min: 640, ideal: 736, max: 736 },

@@ -11,32 +11,35 @@ sap.ui.define([
 		onInit() {
 			const self = this;
 
-			const videoContraints = self.getOwnerComponent().getModel('config').getProperty('/videoContrains'); 
+			// Get the config and video contraints
+			const config = self.getOwnerComponent().getModel('config')
+			const videoContraints = config.getProperty('/videoContrains');
 
-			// Initially set the video media devices
+			// Initially get and set the video media devices
 			navigator.mediaDevices
 				.enumerateDevices()
 				.then((devices) =>
 					devices.filter((device) => device.kind === 'videoinput')
 				)
-				.then((videoDevices) => (self.videoDevices = videoDevices))
+				.then((videoDevices) => {
+					// Set the config model accordingly to the media devices that have been found
+					config.setProperty('/videoDevices', videoDevices);
+					console.log(config.getProperty('/videoDevices'));
+				})
 				.then(
 					() =>
 						(videoContraints.video.deviceId.exact =
-							self.videoDevices[1].deviceId)
+							config.getProperty('/videoDevices')[1].deviceId)
 				)
 				// After contraints are set, initially ask for stream permission
 				.then(() => self.handleChangeStream());
-		}, 
+		},
 
 		handleChangeStream() {
 			const self = this;
 
-			console.log(self.getOwnerComponent().getModel('config'))
-
 			// Get the video contrains
-			const videoContraints = self.getOwnerComponent().getModel('config').getProperty('/videoContrains'); 
-			console.log(videoContraints);
+			const videoContraints = self.getOwnerComponent().getModel('config').getProperty('/videoContrains');
 			const video = document.getElementById('video-stream');
 			navigator.mediaDevices.getUserMedia(videoContraints).then((stream) => {
 				video.srcObject = stream;
