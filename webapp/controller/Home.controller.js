@@ -25,6 +25,7 @@ sap.ui.define([
 				)
 				.then((videoDevices) => {
 					// Set the config model accordingly to the media devices that have been found
+					console.log(videoDevices);
 					config.setProperty('/videoDevices', videoDevices);
 				})
 				.then(
